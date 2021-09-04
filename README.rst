@@ -39,13 +39,13 @@ Quantum Box
 Features
 --------
 
-* TODO
+Quantum Box gives you a place to put futures. It will get them started as asyncio tasks on another tread and only await them when their value is needed.
 
 
 Requirements
 ------------
 
-* TODO
+* Python 3.7+
 
 
 Installation
