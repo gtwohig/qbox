@@ -35,6 +35,25 @@ Quantum Box
    :target: https://github.com/psf/black
    :alt: Black
 
+Overview
+--------
+
+Theory
+~~~~~~
+
+`Schrödinger wrote`_:
+
+    One can even set up quite ridiculous cases. A cat is penned up in a steel chamber, along with the following device (which must be secured against direct interference by the cat): in a Geiger counter, there is a tiny bit of radioactive substance, so small, that perhaps in the course of the hour one of the atoms decays, but also, with equal probability, perhaps none; if it happens, the counter tube discharges and through a relay releases a hammer that shatters a small flask of hydrocyanic acid. If one has left this entire system to itself for an hour, one would say that the cat still lives if meanwhile no atom has decayed. The first atomic decay would have poisoned it. The psi-function of the entire system would express this by having in it the living and dead cat (pardon the expression) mixed or smeared out in equal parts.
+
+    It is typical of these cases that an indeterminacy originally restricted to the atomic domain becomes transformed into macroscopic indeterminacy, which can then be resolved by direct observation. That prevents us from so naïvely accepting as valid a "blurred model" for representing reality. In itself, it would not embody anything unclear or contradictory. There is a difference between a shaky or out-of-focus photograph and a snapshot of clouds and fog banks.
+
+Application to Asynchronous Code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When dealing with async code, we need to decide when to await the completion of a future.
+This awaiting must be done in an asynchronous context.
+Wouldn't it be easier to just put our future into Schrödinger's quantum box, allow it to exist in a state of superposition until we need to "open" it and use the result?
+
 
 Features
 --------
@@ -95,6 +114,7 @@ This project was generated from `@cjolowicz`_'s `Hypermodern Python Cookiecutter
 .. _MIT license: https://opensource.org/licenses/MIT
 .. _PyPI: https://pypi.org/
 .. _Hypermodern Python Cookiecutter: https://github.com/cjolowicz/cookiecutter-hypermodern-python
+.. _Schrödinger wrote: https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat#Thought_experiment
 .. _file an issue: https://github.com/gtwohig/qbox/issues
 .. _pip: https://pip.pypa.io/
 .. github-only
