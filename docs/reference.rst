@@ -6,8 +6,8 @@ Reference
     :backlinks: none
 
 
-qbox.__main__
+qbox.qbox
 -------------
 
-.. automodule:: qbox.__main__
+.. automodule:: qbox.qbox
    :members:
