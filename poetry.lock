@@ -125,7 +125,7 @@ unicode_backport = ["unicodedata2"]
 
 [[package]]
 name = "classify-imports"
-version = "4.0.2"
+version = "4.1.0"
 description = "Utilities for refactoring imports in python-like syntax."
 category = "dev"
 optional = false
@@ -635,14 +635,14 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "reorder-python-imports"
-version = "3.3.0"
+version = "3.8.0"
 description = "Tool for reordering python imports"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.dependencies]
-classify-imports = "*"
+classify-imports = ">=4.1"
 
 [[package]]
 name = "requests"
@@ -1013,7 +1013,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.0"
-content-hash = "8da3e4ae4495e4eeddad241467ca6d130d134f0519f03c42827fef2f048ff986"
+content-hash = "c7747a846a195e6b0a829163948c6c3640c1c60d947719483deb07adfa836ad0"
 
 [metadata.files]
 alabaster = []
