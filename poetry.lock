@@ -635,7 +635,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "reorder-python-imports"
-version = "3.8.0"
+version = "3.8.1"
 description = "Tool for reordering python imports"
 category = "dev"
 optional = false
@@ -1013,7 +1013,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.0"
-content-hash = "c7747a846a195e6b0a829163948c6c3640c1c60d947719483deb07adfa836ad0"
+content-hash = "65bb319ac40719ea04518740b0418bfe83ef354e3a2ac8ca423ba2747887a104"
 
 [metadata.files]
 alabaster = []
