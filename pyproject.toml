@@ -10,33 +10,32 @@ repository = "https://github.com/gtwohig/qbox"
 documentation = "https://qbox.readthedocs.io"
 classifiers = [
     "Development Status :: 1 - Planning",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
 [tool.poetry.urls]
 Changelog = "https://github.com/gtwohig/qbox/releases"
 
 [tool.poetry.dependencies]
-python = "^3.7.0"
+python = "^3.8.1"
 click = "^8.0.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.3.0"
 coverage = { extras = ["toml"], version = "^7.2" }
-safety = "^2.3.5"
 mypy = "^1.2"
-typeguard = "^2.13.3"
+typeguard = "^3.0.2"
 xdoctest = { extras = ["colors"], version = "^1.1.1" }
-sphinx = "^4.3.2"
+sphinx = "^6.1.3"
 sphinx-autobuild = "^2021.3.14"
-pre-commit = "^2.21.0"
-flake8 = "^5.0.4"
-black = "^22.12"
+pre-commit = "^3.2.2"
+flake8 = "^6.0.0"
+black = "^23.3.0"
 flake8-bandit = "^4.1.1"
-flake8-bugbear = "^23.3.12"
+flake8-bugbear = "^23.3.23"
 flake8-docstrings = "^1.7.0"
 flake8-rst-docstrings = "^0.3.0"
 pep8-naming = "^0.13.3"
@@ -46,6 +45,7 @@ pre-commit-hooks = "^4.4.0"
 sphinx-rtd-theme = "^1.2.0"
 sphinx-click = "^4.4.0"
 Pygments = "^2.14.0"
+safety = "^2.3.5"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
