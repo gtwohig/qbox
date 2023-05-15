@@ -1590,14 +1590,14 @@ files = [
 
 [[package]]
 name = "typeguard"
-version = "3.0.2"
+version = "4.0.0"
 description = "Run-time type checker for Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7.4"
 files = [
-    {file = "typeguard-3.0.2-py3-none-any.whl", hash = "sha256:bbe993854385284ab42fd5bd3bee6f6556577ce8b50696d6cb956d704f286c8e"},
-    {file = "typeguard-3.0.2.tar.gz", hash = "sha256:fee5297fdb28f8e9efcb8142b5ee219e02375509cd77ea9d270b5af826358d5a"},
+    {file = "typeguard-4.0.0-py3-none-any.whl", hash = "sha256:c4a40af0ba8a41077221271b46d0a6d8d46045443e4d887887c69254ca861952"},
+    {file = "typeguard-4.0.0.tar.gz", hash = "sha256:194fb3dbcb06ea9caf7088f3befee014de57961689f9c859ac5239b1ef61d987"},
 ]
 
 [package.dependencies]
@@ -1606,7 +1606,7 @@ typing-extensions = {version = ">=4.4.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 doc = ["packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
-test = ["mypy (>=0.991)", "pytest (>=7)"]
+test = ["mypy (>=1.2.0)", "pytest (>=7)"]
 
 [[package]]
 name = "typing-extensions"
@@ -1708,4 +1708,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "8fc0baa5c79ac06511fae57c02016a97e6789b56ebab1799fa3cf810bc59bb98"
+content-hash = "1a8e01f3ef0e31bb579b3e9d4b457a75acce3eb34962c4f41cfa70843b21e54d"
