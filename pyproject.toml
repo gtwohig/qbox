@@ -10,17 +10,17 @@ repository = "https://github.com/gtwohig/qbox"
 documentation = "https://qbox.readthedocs.io"
 classifiers = [
     "Development Status :: 1 - Planning",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
 [tool.poetry.urls]
 Changelog = "https://github.com/gtwohig/qbox/releases"
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = "^3.9"
 click = "^8.0.1"
 
 [tool.poetry.group.dev.dependencies]
@@ -29,7 +29,7 @@ coverage = { extras = ["toml"], version = "^7.2" }
 mypy = "^1.2"
 typeguard = ">=3.0.2,<5.0.0"
 xdoctest = { extras = ["colors"], version = "^1.1.1" }
-sphinx = "^7.1.2"
+sphinx = "^7.2.6"
 sphinx-autobuild = "^2021.3.14"
 pre-commit = "^3.2.2"
 flake8 = "^6.0.0"
