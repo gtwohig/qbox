@@ -32,10 +32,10 @@ xdoctest = { extras = ["colors"], version = "^1.1.1" }
 sphinx = "^7.2.6"
 sphinx-autobuild = "^2021.3.14"
 pre-commit = "^3.2.2"
-flake8 = "^6.0.0"
+flake8 = "^7.0.0"
 black = "^23.3.0"
 flake8-bandit = "^4.1.1"
-flake8-bugbear = "^23.3.23"
+flake8-bugbear = "^24.1.7"
 flake8-docstrings = "^1.7.0"
 flake8-rst-docstrings = "^0.3.0"
 pep8-naming = "^0.13.3"
@@ -45,7 +45,7 @@ pre-commit-hooks = "^4.4.0"
 sphinx-rtd-theme = ">=1.2,<3.0"
 sphinx-click = ">=4.4,<6.0"
 Pygments = "^2.14.0"
-safety = "^2.3.5"
+safety = "^3.0.1"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
