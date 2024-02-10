@@ -30,7 +30,7 @@ mypy = "^1.2"
 typeguard = ">=3.0.2,<5.0.0"
 xdoctest = { extras = ["colors"], version = "^1.1.1" }
 sphinx = "^7.2.6"
-sphinx-autobuild = "^2021.3.14"
+sphinx-autobuild = "^2024.2.4"
 pre-commit = "^3.2.2"
 flake8 = "^7.0.0"
 black = "^23.3.0"
