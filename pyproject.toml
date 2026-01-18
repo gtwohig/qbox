@@ -142,7 +142,7 @@ relative_files = true
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 100
+# fail_under is enforced in CI after combining coverage from all platforms
 exclude_lines = [
     "pragma: no cover",
     "if TYPE_CHECKING:",

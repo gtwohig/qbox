@@ -161,8 +161,8 @@ jobs:
       - name: Combine coverage
         run: uv run coverage combine
 
-      - name: Generate coverage report
-        run: uv run coverage report
+      - name: Generate coverage report (require 100%)
+        run: uv run coverage report --fail-under=100
 
       - name: Generate XML report for codecov
         run: uv run coverage xml
