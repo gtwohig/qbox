@@ -82,16 +82,7 @@ jobs:
           uv pip install -e . --no-deps
 
       - name: Run tests with coverage
-        env:
-          COVERAGE_FILE: .coverage
         run: uv run --no-sync coverage run --source=qbox -m pytest
-
-      - name: Debug - List files
-        shell: bash
-        run: |
-          echo "Current directory: $(pwd)"
-          ls -la .coverage* 2>/dev/null || echo "No .coverage files found"
-          find . -name ".coverage*" -type f 2>/dev/null || echo "No coverage files found anywhere"
 
       - name: Rename coverage file
         shell: bash
@@ -103,6 +94,7 @@ jobs:
           name: coverage-${{ matrix.os }}-py${{ matrix.python-version }}
           path: .coverage.${{ matrix.os }}-py${{ matrix.python-version }}
           retention-days: 1
+          include-hidden-files: true
 
   test-pypy:
     name: Test (PyPy ${{ matrix.pypy-version }}, ${{ matrix.os }})
@@ -131,16 +123,7 @@ jobs:
           uv pip install -e . --no-deps
 
       - name: Run tests with coverage
-        env:
-          COVERAGE_FILE: .coverage
         run: uv run --no-sync coverage run --source=qbox -m pytest
-
-      - name: Debug - List files
-        shell: bash
-        run: |
-          echo "Current directory: $(pwd)"
-          ls -la .coverage* 2>/dev/null || echo "No .coverage files found"
-          find . -name ".coverage*" -type f 2>/dev/null || echo "No coverage files found anywhere"
 
       - name: Rename coverage file
         shell: bash
@@ -152,6 +135,7 @@ jobs:
           name: coverage-${{ matrix.os }}-${{ matrix.pypy-version }}
           path: .coverage.${{ matrix.os }}-${{ matrix.pypy-version }}
           retention-days: 1
+          include-hidden-files: true
 
   coverage:
     name: Coverage
