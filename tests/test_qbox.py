@@ -2659,7 +2659,9 @@ class TestNumericConversionCoverage:
         async def get_value() -> int:
             return 10
 
-        box = QBox(get_value())
+        # Use start='observed' to prevent race condition where background
+        # thread completes before we check _qbox_is_cached
+        box = QBox(get_value(), start="observed")
         composed = box + 5  # Composed box: 10 + 5 = 15
 
         # Keep references in list to avoid replacement
@@ -2678,7 +2680,7 @@ class TestNumericConversionCoverage:
         async def get_value2() -> int:
             return 20
 
-        box2 = QBox(get_value2())
+        box2 = QBox(get_value2(), start="observed")
         composed2 = box2 * 2  # 20 * 2 = 40
 
         boxes2 = [box2, composed2]
