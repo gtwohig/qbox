@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qbox"
-version = "0.1.0"
+version = "0.1.1"
 description = "A lazily awaited container for async operations - Schrödinger's box for futures"
 readme = "README.md"
 license = "MIT"
