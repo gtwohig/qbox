@@ -801,6 +801,27 @@ dev = [
     { name = "sphinx-rtd-theme" },
     { name = "ty" },
 ]
+docs = [
+    { name = "myst-parser", version = "4.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "myst-parser", version = "5.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "sphinx-autobuild", version = "2024.10.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "sphinx-autobuild", version = "2025.8.25", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "sphinx-rtd-theme" },
+]
+lint = [
+    { name = "interrogate" },
+    { name = "pre-commit" },
+    { name = "ruff" },
+    { name = "ty" },
+]
+test = [
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "pytest-cov" },
+]
 
 [package.metadata]
 
@@ -817,6 +838,23 @@ dev = [
     { name = "sphinx-autobuild", specifier = ">=2024.0" },
     { name = "sphinx-rtd-theme", specifier = ">=3.0" },
     { name = "ty", specifier = ">=0.0.1a8" },
+]
+docs = [
+    { name = "myst-parser", specifier = ">=4.0" },
+    { name = "sphinx", specifier = ">=8.0" },
+    { name = "sphinx-autobuild", specifier = ">=2024.0" },
+    { name = "sphinx-rtd-theme", specifier = ">=3.0" },
+]
+lint = [
+    { name = "interrogate", specifier = ">=1.5.0" },
+    { name = "pre-commit", specifier = ">=4.0" },
+    { name = "ruff", specifier = ">=0.8" },
+    { name = "ty", specifier = ">=0.0.1a8" },
+]
+test = [
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "pytest-asyncio", specifier = ">=0.24" },
+    { name = "pytest-cov", specifier = ">=6.0" },
 ]
 
 [[package]]
