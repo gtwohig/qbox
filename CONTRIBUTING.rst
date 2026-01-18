@@ -10,7 +10,6 @@ Here is a list of important resources for contributors:
 - `Source Code`_
 - `Documentation`_
 - `Issue Tracker`_
-- `Code of Conduct`_
 
 .. _MIT license: https://opensource.org/licenses/MIT
 .. _Source Code: https://github.com/gtwohig/qbox
@@ -43,29 +42,21 @@ Request features on the `Issue Tracker`_.
 How to set up your development environment
 ------------------------------------------
 
-You need Python 3.6+ and the following tools:
-
-- Poetry_
-- Nox_
-- nox-poetry_
+You need Python 3.10+ and uv_ for package management.
 
 Install the package with development requirements:
 
 .. code:: console
 
-   $ poetry install
+   $ uv sync
 
-You can now run an interactive Python session,
-or the command-line interface:
+You can now run an interactive Python session:
 
 .. code:: console
 
-   $ poetry run python
-   $ poetry run qbox
+   $ uv run python
 
-.. _Poetry: https://python-poetry.org/
-.. _Nox: https://nox.thea.codes/
-.. _nox-poetry: https://nox-poetry.readthedocs.io/
+.. _uv: https://docs.astral.sh/uv/
 
 
 How to test the project
@@ -75,25 +66,68 @@ Run the full test suite:
 
 .. code:: console
 
-   $ nox
+   $ uv run pytest
 
-List the available Nox sessions:
-
-.. code:: console
-
-   $ nox --list-sessions
-
-You can also run a specific Nox session.
-For example, invoke the unit test suite like this:
+Run tests with verbose output:
 
 .. code:: console
 
-   $ nox --session=tests
+   $ uv run pytest -v
+
+Run tests with coverage:
+
+.. code:: console
+
+   $ uv run pytest --cov=qbox --cov-report=term-missing
 
 Unit tests are located in the ``tests`` directory,
 and are written using the pytest_ testing framework.
 
 .. _pytest: https://pytest.readthedocs.io/
+
+
+How to check code quality
+-------------------------
+
+Run linting:
+
+.. code:: console
+
+   $ uv run ruff check src tests
+
+Auto-fix linting issues:
+
+.. code:: console
+
+   $ uv run ruff check src tests --fix
+
+Format code:
+
+.. code:: console
+
+   $ uv run ruff format src tests
+
+Run type checking:
+
+.. code:: console
+
+   $ uv run ty check src
+
+
+How to build documentation
+--------------------------
+
+Build the documentation:
+
+.. code:: console
+
+   $ uv run sphinx-build -b html docs docs/_build/html
+
+Or use live-reload for development:
+
+.. code:: console
+
+   $ uv run sphinx-autobuild docs docs/_build/html
 
 
 How to submit changes
@@ -103,21 +137,21 @@ Open a `pull request`_ to submit changes to this project.
 
 Your pull request needs to meet the following guidelines for acceptance:
 
-- The Nox test suite must pass without errors and warnings.
+- The test suite must pass without errors.
 - Include unit tests. This project maintains 100% code coverage.
+- Code must pass linting (ruff) and type checking (ty).
 - If your changes add functionality, update the documentation accordingly.
 
 Feel free to submit early, though—we can always iterate on this.
 
-To run linting and code formatting checks before commiting your change, you can install pre-commit as a Git hook by running the following command:
+To run linting and code formatting checks before committing your change,
+you can install pre-commit as a Git hook:
 
 .. code:: console
 
-   $ nox --session=pre-commit -- install
+   $ uv run pre-commit install
 
 It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
 .. _pull request: https://github.com/gtwohig/qbox/pulls
-.. github-only
-.. _Code of Conduct: CODE_OF_CONDUCT.rst

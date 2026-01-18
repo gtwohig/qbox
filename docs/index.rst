@@ -1,5 +1,5 @@
-.. include:: ../README.rst
-   :end-before: github-only
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
 
 .. _Contributor Guide: contributing.html
 
@@ -7,8 +7,11 @@
    :hidden:
    :maxdepth: 1
 
+   how-it-works
+   observation
+   isinstance
+   static-typing
    reference
    contributing
-   Code of Conduct <codeofconduct>
    License <license>
    Changelog <https://github.com/gtwohig/qbox/releases>

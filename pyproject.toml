@@ -1,70 +1,172 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "qbox"
-version = "0.0.1-alpha.0"
-description = "Quantum Box"
-authors = ["Greg Twohig"]
+version = "0.1.0"
+description = "A lazily awaited container for async operations - Schrödinger's box for futures"
+readme = "README.md"
 license = "MIT"
-readme = "README.rst"
-homepage = "https://github.com/gtwohig/qbox"
-repository = "https://github.com/gtwohig/qbox"
-documentation = "https://qbox.readthedocs.io"
+authors = [{ name = "Greg Twohig" }]
+requires-python = ">=3.10"
 classifiers = [
-    "Development Status :: 1 - Planning",
-    "Programming Language :: Python :: 3.9",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+    "Framework :: AsyncIO",
 ]
+keywords = ["async", "asyncio", "futures", "lazy", "concurrency"]
 
-[tool.poetry.urls]
+[project.urls]
+Homepage = "https://github.com/gtwohig/qbox"
+Documentation = "https://qbox.readthedocs.io"
+Repository = "https://github.com/gtwohig/qbox"
 Changelog = "https://github.com/gtwohig/qbox/releases"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-click = "^8.0.1"
+[dependency-groups]
+test = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=6.0",
+]
+lint = [
+    "ruff>=0.8",
+    "ty>=0.0.1a8",
+    "interrogate>=1.5.0",
+    "pre-commit>=4.0",
+]
+docs = [
+    "sphinx>=8.0",
+    "sphinx-rtd-theme>=3.0",
+    "sphinx-autobuild>=2024.0",
+    "myst-parser>=4.0",
+]
+dev = [
+    { include-group = "test" },
+    { include-group = "lint" },
+    { include-group = "docs" },
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = ">=7.3,<9.0"
-coverage = { extras = ["toml"], version = "^7.2" }
-mypy = "^1.2"
-typeguard = ">=3.0.2,<5.0.0"
-xdoctest = { extras = ["colors"], version = "^1.1.1" }
-sphinx = "^7.2.6"
-sphinx-autobuild = "^2024.2.4"
-pre-commit = "^3.2.2"
-flake8 = "^7.0.0"
-black = "^23.3.0"
-flake8-bandit = "^4.1.1"
-flake8-bugbear = "^24.1.7"
-flake8-docstrings = "^1.7.0"
-flake8-rst-docstrings = "^0.3.0"
-pep8-naming = "^0.13.3"
-darglint = "^1.8.1"
-reorder-python-imports = "^3.9.0"
-pre-commit-hooks = "^4.4.0"
-sphinx-rtd-theme = ">=1.2,<3.0"
-sphinx-click = ">=4.4,<6.0"
-Pygments = "^2.14.0"
-safety = "^3.0.1"
+[tool.hatch.build.targets.wheel]
+packages = ["src/qbox"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    # Core
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    # Code quality
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "SIM",    # flake8-simplify
+    "ARG",    # flake8-unused-arguments
+    "RET",    # flake8-return
+    "PTH",    # flake8-use-pathlib
+    "ERA",    # eradicate (commented code)
+    "PERF",   # perflint
+    "FURB",   # refurb (modern python)
+    "RUF",    # Ruff-specific rules
+    # Security & async
+    "S",      # flake8-bandit (security)
+    "ASYNC",  # flake8-async
+    # Imports & types
+    "A",      # flake8-builtins
+    "FA",     # flake8-future-annotations
+    "ISC",    # flake8-implicit-str-concat
+    "TCH",    # flake8-type-checking
+    # Style
+    "N",      # pep8-naming
+    "D",      # pydocstyle
+    # Pylint subset
+    "PL",     # pylint
+]
+ignore = [
+    "D100",   # Missing docstring in public module
+    "D104",   # Missing docstring in public package
+    "D107",   # Missing docstring in __init__
+    "ISC001", # Conflicts with formatter
+    "PLR0913", # Too many arguments (sometimes necessary)
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "D",       # No docstrings required in tests
+    "ARG",     # Unused arguments OK (fixtures)
+    "S101",    # Assert is fine in tests
+    "PLC0415", # Imports in functions OK (test isolation)
+    "PLR2004", # Magic values OK in tests
+    "PLW0603", # Global statements OK in tests
+]
+"src/qbox/_isinstance.py" = [
+    "PLW0603", # Global statement needed for patching
+    "PLW0602", # Global read needed
+    "PLC0415", # Import inside function to avoid circular import
+]
+
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+addopts = "-v --tb=short --doctest-modules"
+doctest_optionflags = ["ELLIPSIS", "NORMALIZE_WHITESPACE"]
 
 [tool.coverage.paths]
-source = ["src", "*/site-packages"]
+# Map paths from different CI environments to the canonical source path
+source = [
+    "src/qbox",
+    "*/site-packages/qbox",
+]
 
 [tool.coverage.run]
 branch = true
 source = ["qbox"]
+relative_files = true
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 100
+# fail_under is enforced in CI after combining coverage from all platforms
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "@overload",
+]
 
-[tool.mypy]
-strict = true
-pretty = true
-show_column_numbers = true
-show_error_codes = true
-show_error_context = true
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.interrogate]
+ignore-init-method = false
+ignore-init-module = false
+ignore-magic = false
+ignore-semiprivate = true
+ignore-private = true
+ignore-property-decorators = false
+ignore-module = false
+ignore-nested-functions = true
+ignore-overloaded-functions = true
+fail-under = 100
+exclude = ["tests"]
+verbose = 2
