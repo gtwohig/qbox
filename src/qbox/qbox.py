@@ -67,7 +67,7 @@ def _sync_frame_locals_noop(frame: FrameType) -> None:
     """No-op sync for Python 3.13+ or unsupported implementations."""
 
 
-def _sync_frame_locals_cpython(frame: FrameType) -> None:  # pragma: no cover
+def _sync_frame_locals_cpython(frame: FrameType) -> None:
     """CPython < 3.13 sync using PyFrame_LocalsToFast."""
     with contextlib.suppress(AttributeError, OSError):
         ctypes.pythonapi.PyFrame_LocalsToFast(
@@ -76,25 +76,28 @@ def _sync_frame_locals_cpython(frame: FrameType) -> None:  # pragma: no cover
         )
 
 
-# Select the appropriate sync implementation at import time
+def _sync_frame_locals_pypy(frame: FrameType) -> None:
+    """PyPy sync using __pypy__.locals_to_fast."""
+    import __pypy__  # type: ignore[import-not-found]  # noqa: PLC0415
+
+    __pypy__.locals_to_fast(frame)
+
+
+# Select the appropriate sync implementation at import time.
+# Coverage is collected across all platforms and combined, so each branch
+# gets covered by the appropriate platform (CPython, PyPy, Python 3.13+).
 if sys.version_info >= (3, 13):
     # Python 3.13+ uses FrameLocalsProxy - writes persist automatically
     _sync_frame_locals = _sync_frame_locals_noop
-elif platform.python_implementation() == "PyPy":  # pragma: no cover
+elif platform.python_implementation() == "PyPy":
     # PyPy has its own locals_to_fast in the __pypy__ module
     try:
-        import __pypy__  # type: ignore[import-not-found]
-
-        def _sync_frame_locals_pypy(frame: FrameType) -> None:
-            """PyPy sync using __pypy__.locals_to_fast."""
-            __pypy__.locals_to_fast(frame)
-
         _sync_frame_locals = _sync_frame_locals_pypy
-    except (ImportError, AttributeError):
+    except ImportError:
         _sync_frame_locals = _sync_frame_locals_noop
-elif platform.python_implementation() == "CPython":  # pragma: no cover
+elif platform.python_implementation() == "CPython":
     _sync_frame_locals = _sync_frame_locals_cpython
-else:  # pragma: no cover
+else:
     # Other implementations: best effort, modifications may not persist
     _sync_frame_locals = _sync_frame_locals_noop
 

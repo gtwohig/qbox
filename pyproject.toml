@@ -128,11 +128,17 @@ addopts = "-v --tb=short --doctest-modules"
 doctest_optionflags = ["ELLIPSIS", "NORMALIZE_WHITESPACE"]
 
 [tool.coverage.paths]
-source = ["src"]
+# Map paths from different CI environments to the canonical source path
+source = [
+    "src/qbox",
+    "*/site-packages/qbox",
+]
 
 [tool.coverage.run]
 branch = true
 source = ["qbox"]
+parallel = true
+relative_files = true
 
 [tool.coverage.report]
 show_missing = true
@@ -141,12 +147,6 @@ exclude_lines = [
     "pragma: no cover",
     "if TYPE_CHECKING:",
     "@overload",
-]
-exclude_also = [
-    # Platform-specific code that can't be covered on all platforms
-    "if platform.python_implementation\\(\\) ==",
-    "elif platform.python_implementation\\(\\) ==",
-    "if sys.version_info",
 ]
 
 [tool.interrogate]

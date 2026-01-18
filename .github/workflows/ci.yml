@@ -79,16 +79,19 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev
 
-      - name: Run tests
-        run: uv run pytest --cov=qbox --cov-report=xml
+      - name: Run tests with coverage
+        run: uv run pytest --cov=qbox
 
-      - name: Upload coverage
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
-        uses: codecov/codecov-action@v4
+      - name: Rename coverage file
+        shell: bash
+        run: mv .coverage .coverage.${{ matrix.os }}-py${{ matrix.python-version }}
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          fail_ci_if_error: false
+          name: coverage-${{ matrix.os }}-py${{ matrix.python-version }}
+          path: .coverage.${{ matrix.os }}-py${{ matrix.python-version }}
+          retention-days: 1
 
   test-pypy:
     name: Test (PyPy ${{ matrix.pypy-version }}, ${{ matrix.os }})
@@ -114,8 +117,62 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev
 
-      - name: Run tests
-        run: uv run pytest --cov=qbox --cov-report=xml
+      - name: Run tests with coverage
+        run: uv run pytest --cov=qbox
+
+      - name: Rename coverage file
+        shell: bash
+        run: mv .coverage .coverage.${{ matrix.os }}-${{ matrix.pypy-version }}
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.pypy-version }}
+          path: .coverage.${{ matrix.os }}-${{ matrix.pypy-version }}
+          retention-days: 1
+
+  coverage:
+    name: Coverage
+    needs: [test, test-pypy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Download all coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-*
+          merge-multiple: true
+
+      - name: List coverage files
+        run: ls -la .coverage*
+
+      - name: Combine coverage
+        run: uv run coverage combine
+
+      - name: Generate coverage report
+        run: uv run coverage report
+
+      - name: Generate XML report for codecov
+        run: uv run coverage xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          fail_ci_if_error: false
 
   docs:
     name: Docs
