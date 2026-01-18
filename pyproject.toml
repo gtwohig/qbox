@@ -146,7 +146,6 @@ source = [
 [tool.coverage.run]
 branch = true
 source = ["qbox"]
-parallel = true
 relative_files = true
 
 [tool.coverage.report]
