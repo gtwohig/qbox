@@ -2598,7 +2598,7 @@ class TestNumericConversionCoverage:
         async def get_value() -> float:
             return 3.14159
 
-        box = QBox(get_value())
+        box = QBox(get_value(), start="observed")
         # Keep reference in list to avoid local variable replacement
         boxes = [box]
 
@@ -2619,7 +2619,7 @@ class TestNumericConversionCoverage:
         async def get_int() -> int:
             return 42
 
-        box = QBox(get_int())
+        box = QBox(get_int(), start="observed")
         boxes = [box]
         assert not boxes[0]._qbox_is_cached
 
@@ -2634,7 +2634,7 @@ class TestNumericConversionCoverage:
         async def get_value() -> float:
             return 2.5
 
-        box = QBox(get_value())
+        box = QBox(get_value(), start="observed")
         # Keep reference in list to avoid local variable replacement
         boxes = [box]
 
@@ -2655,7 +2655,7 @@ class TestNumericConversionCoverage:
         async def get_int() -> int:
             return 7
 
-        box = QBox(get_int())
+        box = QBox(get_int(), start="observed")
         boxes = [box]
         assert not boxes[0]._qbox_is_cached
 
