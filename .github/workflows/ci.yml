@@ -26,7 +26,7 @@ jobs:
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync --group lint
+        run: uv sync --only-group lint
 
       - name: Run ruff check
         run: uv run ruff check src tests
@@ -52,7 +52,7 @@ jobs:
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync --group lint
+        run: uv sync --only-group lint
 
       - name: Run ty
         run: uv run ty check src
@@ -77,7 +77,7 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: uv sync --group test
+        run: uv sync --only-group test
 
       - name: Run tests with coverage
         run: uv run pytest --cov=qbox
@@ -115,7 +115,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --group test
+        run: uv sync --only-group test
 
       - name: Run tests with coverage
         run: uv run pytest --cov=qbox
@@ -147,7 +147,7 @@ jobs:
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync --group test
+        run: uv sync --only-group test
 
       - name: Download all coverage artifacts
         uses: actions/download-artifact@v4
@@ -189,7 +189,7 @@ jobs:
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync --group docs
+        run: uv sync --only-group docs
 
       - name: Build docs
         run: uv run sphinx-build -W -b html docs docs/_build/html
