@@ -1183,6 +1183,30 @@ class TestIsinstancePatching:
         finally:
             disable_qbox_isinstance()
 
+    def test_comparison_between_typed_qboxes(self) -> None:
+        """Test that comparisons work between typed QBoxes (with mimic_type).
+
+        This specifically tests the _declared_mimic_type branch in _qbox_is_qbox
+        which is used when unwrapping typed QBox instances during comparisons.
+        """
+        from collections.abc import Mapping
+
+        async def get_dict() -> dict[str, int]:
+            return {"a": 1, "b": 2}
+
+        # Create typed QBoxes with mimic_type
+        box1 = QBox(get_dict(), mimic_type=Mapping)
+        box2 = QBox(get_dict(), mimic_type=Mapping)
+
+        # Comparisons between typed QBoxes should work
+        # This triggers _qbox_is_qbox on a typed QBox instance
+        assert box1 == box2
+        assert not (box1 != box2)  # noqa: SIM202
+
+        # Comparing typed QBox with plain QBox
+        box3 = QBox(get_dict())
+        assert box1 == box3
+
 
 class TestCascadingObservation:
     """Tests for cascading observation of dependency trees."""
