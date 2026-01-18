@@ -1341,7 +1341,7 @@ class TestObserveCascading:
         async def get_value() -> int:
             return 10
 
-        box = QBox(get_value())
+        box = QBox(get_value(), start="observed")
         composed = box + 5
 
         # Keep a reference that won't be replaced (stored in list)
