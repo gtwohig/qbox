@@ -1556,6 +1556,11 @@ class TestStartParameter:
         composed2 = observed_box + soon_box
         assert composed2._qbox_start_mode == "soon"
 
+        # Force observation to avoid "coroutine never awaited" warnings
+        # when tests run in different orders
+        _ = composed1.__wrapped__
+        _ = composed2.__wrapped__
+
 
 class TestReprObservesParameter:
     """Tests for the repr_observes parameter."""
@@ -1628,17 +1633,23 @@ class TestCancelOnDeleteParameter:
         import gc
         import warnings
 
-        async def get_value() -> int:
+        async def never_awaited_coro() -> int:
             return 42
 
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            box = QBox(get_value(), start="observed")
+            box = QBox(never_awaited_coro(), start="observed")
             del box
             gc.collect()  # Force garbage collection
 
-            # Should not have any "never awaited" warnings
-            coro_warnings = [x for x in w if "was never awaited" in str(x.message)]
+            # Should not have any "never awaited" warnings from THIS test's coroutine
+            # Filter by function name to avoid catching leaked warnings from other tests
+            coro_warnings = [
+                x
+                for x in w
+                if "was never awaited" in str(x.message)
+                and "never_awaited_coro" in str(x.message)
+            ]
             assert len(coro_warnings) == 0
 
     def test_del_cancels_future_when_cancel_on_delete_true(self) -> None:
