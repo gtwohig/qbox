@@ -93,13 +93,13 @@ elif platform.python_implementation() == "PyPy":
     # PyPy has its own locals_to_fast in the __pypy__ module
     try:
         _sync_frame_locals = _sync_frame_locals_pypy
-    except ImportError:
-        _sync_frame_locals = _sync_frame_locals_noop
+    except ImportError:  # pragma: no cover (unreachable - function assignment doesn't execute import)
+        _sync_frame_locals = _sync_frame_locals_noop  # pragma: no cover
 elif platform.python_implementation() == "CPython":
     _sync_frame_locals = _sync_frame_locals_cpython
-else:
+else:  # pragma: no cover (requires GraalPy or similar exotic implementation)
     # Other implementations: best effort, modifications may not persist
-    _sync_frame_locals = _sync_frame_locals_noop
+    _sync_frame_locals = _sync_frame_locals_noop  # pragma: no cover
 
 
 def _get_typed_qbox_class(mimic_type: type[Any]) -> type[Any]:
