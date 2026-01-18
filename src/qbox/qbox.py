@@ -882,10 +882,14 @@ class QBox(Generic[T]):
     def _unwrap_if_qbox(value: Any) -> Any:
         """Unwrap a value if it's a QBox (with reference replacement), otherwise as-is.
 
+        Uses _qbox_is_qbox instead of isinstance to avoid issues when
+        enable_qbox_isinstance() is active (the patched isinstance would
+        observe and unwrap the value before the check).
+
         Args:
             value: The value to unwrap.
         """
-        if isinstance(value, QBox):
+        if QBox._qbox_is_qbox(value):
             return value._force_and_replace(value._qbox_scope)
         return value
 

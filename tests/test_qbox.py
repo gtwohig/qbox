@@ -1154,6 +1154,35 @@ class TestIsinstancePatching:
         # Patching should be disabled after the context
         assert not is_qbox_isinstance_enabled()
 
+    def test_comparison_works_with_isinstance_patching_enabled(self) -> None:
+        """Test that QBox comparisons work correctly with isinstance patching.
+
+        Regression test: _unwrap_if_qbox used isinstance(value, QBox) which
+        failed when enable_qbox_isinstance() was active because the patched
+        isinstance observes and unwraps the value before checking.
+        """
+        from qbox import disable_qbox_isinstance, enable_qbox_isinstance
+
+        async def get_list() -> list[int]:
+            return [1, 2, 3]
+
+        enable_qbox_isinstance()
+        try:
+            box1 = QBox(get_list())
+            box2 = QBox(get_list())
+
+            # Comparisons between QBoxes should work
+            assert box1 == box2  # Both contain [1, 2, 3]
+            assert box1 != [1, 2, 4]  # Test inequality with different value
+
+            # Comparisons with concrete values should work
+            assert box1 == [1, 2, 3]
+            # Test reverse comparison (concrete == QBox) to ensure __eq__ works
+            # from both directions. Intentionally written this way for coverage.
+            assert box1 == [1, 2, 3] and [1, 2, 3] == box1  # noqa: SIM300
+        finally:
+            disable_qbox_isinstance()
+
 
 class TestCascadingObservation:
     """Tests for cascading observation of dependency trees."""
@@ -1946,7 +1975,11 @@ class TestParentBoxMemory:
         async def get_value() -> int:
             return 10
 
-        box1 = QBox(get_value())
+        # Use start='observed' to prevent the background thread from clearing
+        # parent references before we test them. With start='soon', box3's
+        # coroutine runs immediately and calls box2._get_value_async(), which
+        # clears box2._qbox_parent_boxes before we reach the assertions.
+        box1 = QBox(get_value(), start="observed")
         box2 = box1 + 5
         box3 = box2 * 2
 
