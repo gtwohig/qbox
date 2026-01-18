@@ -29,13 +29,13 @@ jobs:
         run: uv sync --only-group lint
 
       - name: Run ruff check
-        run: uv run ruff check src tests
+        run: uv run --only-group lint ruff check src tests
 
       - name: Run ruff format check
-        run: uv run ruff format --check src tests
+        run: uv run --only-group lint ruff format --check src tests
 
       - name: Run interrogate
-        run: uv run interrogate src
+        run: uv run --only-group lint interrogate src
 
   type-check:
     name: Type Check
@@ -55,7 +55,7 @@ jobs:
         run: uv sync --only-group lint
 
       - name: Run ty
-        run: uv run ty check src
+        run: uv run --only-group lint ty check src
 
   test:
     name: Test (Python ${{ matrix.python-version }}, ${{ matrix.os }})
@@ -80,7 +80,7 @@ jobs:
         run: uv sync --only-group test
 
       - name: Run tests with coverage
-        run: uv run pytest --cov=qbox
+        run: uv run --only-group test pytest --cov=qbox
 
       - name: Rename coverage file
         shell: bash
@@ -118,7 +118,7 @@ jobs:
         run: uv sync --only-group test
 
       - name: Run tests with coverage
-        run: uv run pytest --cov=qbox
+        run: uv run --only-group test pytest --cov=qbox
 
       - name: Rename coverage file
         shell: bash
@@ -159,13 +159,13 @@ jobs:
         run: ls -la .coverage*
 
       - name: Combine coverage
-        run: uv run coverage combine
+        run: uv run --only-group test coverage combine
 
       - name: Generate coverage report (require 100%)
-        run: uv run coverage report --fail-under=100
+        run: uv run --only-group test coverage report --fail-under=100
 
       - name: Generate XML report for codecov
-        run: uv run coverage xml
+        run: uv run --only-group test coverage xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -192,4 +192,4 @@ jobs:
         run: uv sync --only-group docs
 
       - name: Build docs
-        run: uv run sphinx-build -W -b html docs docs/_build/html
+        run: uv run --only-group docs sphinx-build -W -b html docs docs/_build/html
