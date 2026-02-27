@@ -89,7 +89,7 @@ jobs:
         run: mv .coverage .coverage.${{ matrix.os }}-py${{ matrix.python-version }}
 
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-${{ matrix.os }}-py${{ matrix.python-version }}
           path: .coverage.${{ matrix.os }}-py${{ matrix.python-version }}
@@ -130,7 +130,7 @@ jobs:
         run: mv .coverage .coverage.${{ matrix.os }}-${{ matrix.pypy-version }}
 
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-${{ matrix.os }}-${{ matrix.pypy-version }}
           path: .coverage.${{ matrix.os }}-${{ matrix.pypy-version }}
